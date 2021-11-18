@@ -2,11 +2,11 @@
 version: '2.2'
 services:
   octobercms_web:
-    image: aspendigital/octobercms:php7.4-fpm
+    image: aspendigital/octobercms
     init: true
     environment:
       - DB_TYPE=mysql
-      - DB_HOST=ocotbercms_db
+      - DB_HOST=octobercms_db
       - DB_DATABASE=octobercms
       - DB_USERNAME=root
       - DB_PASSWORD=root
@@ -21,8 +21,8 @@ services:
     depends_on:
       - octobercms_db
 
-  ocotbercms_db:
-    image: mysql:5.7.22
+  octobercms_db:
+    image: mysql:5.7
     platform: linux/amd64
     restart: always
     environment:
