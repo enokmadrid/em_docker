@@ -1,13 +1,12 @@
 # docker-compose.yml
 version: '2.2'
 services:
-  ocotbercms_web:
-    image: aspendigital/octobercms
+  octobercms_web:
+    image: aspendigital/octobercms:php7.4-fpm
     init: true
-
     environment:
       - DB_TYPE=mysql
-      - DB_HOST=mysql #DB_HOST should match the service name of the database container
+      - DB_HOST=ocotbercms_db
       - DB_DATABASE=octobercms
       - DB_USERNAME=root
       - DB_PASSWORD=root
@@ -19,21 +18,20 @@ services:
       - ./october/storage/app:/var/www/html/storage/app:rw
       - ./october/themes/em.com:/var/www/html/themes/em.com
       
-
-      
     depends_on:
-      - ocotbercms_db
+      - octobercms_db
 
   ocotbercms_db:
-    image: mysql:5.7
-    # restart: always
+    image: mysql:5.7.22
+    platform: linux/amd64
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=octobercms
     volumes:
-      - ocotbercms_db:/var/lib/mysql
+      - octobercms_db:/var/lib/mysql
 
 
 volumes:
-  ocotbercms_web:
-  ocotbercms_db:
+  octobercms_web:
+  octobercms_db:
